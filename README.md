@@ -1,116 +1,86 @@
-# PokerNow Bot Framework
+# PokerNow Bot Framework 
 
-Welcome to the PokerNow Bot Framework, an advanced Python automation tool designed to interact with the "PokerNow" platform. Leveraging the power of Selenium, this framework offers a robust solution for automating game actions, managing sessions through cookies, and intelligently parsing the game state to make real-time decisions. Whether you're developing strategies for automated gameplay or conducting analysis on poker games, this framework provides the necessary tools to enhance your "PokerNow" experience.
+## Introduction
 
-## Features
+The PokerNow Bot Framework is a sophisticated Python library that automates interactions on the "PokerNow" platform. Built atop Selenium, it provides an array of functionalities designed for automating game decisions, session management through cookies, and analyzing the game state in real-time. This tool is perfect for those looking to develop automated strategies for poker gameplay or for analytical purposes, offering a deep dive into the mechanics of online poker.
 
-- **Automated Session Management**: Seamlessly manage your sessions with automated cookie handling, allowing for persistent connections and ease of access to your "Poker Now" games.
-- **Dynamic Game State Analysis**: Capture and interpret the live state of your poker game, including details such as pot size, community cards, player actions, and much more.
-- **Strategic Action Execution**: Implement and execute custom strategies with supported actions like folding, checking, calling, and raising, tailored to the current game scenario.
-- **Customizable Framework**: Designed with extensibility in mind, allowing for the integration of complex strategies and analytical tools to refine your poker playing algorithm.
+## Core Features
 
-## Getting Started
+- **Session Management**: Automated cookie handling ensures seamless session continuity and easy access to poker games.
+- **Real-time Game Analysis**: Interprets the live game state, including pot size, community cards, and player actions, to inform strategy decisions.
+- **Automated Game Actions**: Supports strategic gameplay through automated actions like folding, checking, calling, and raising based on the game state.
+- **Framework Customization**: Offers a flexible architecture for the integration of advanced strategies and analytics, enabling users to tailor the bot's behavior to their preferences.
 
-### Prerequisites
+## Installation Guide
 
-Ensure you have the following installed before proceeding:
-- Python 3.6+
+### System Requirements
+
+- Python 3.6 or newer
 - Google Chrome or Mozilla Firefox
-- Corresponding ChromeDriver or GeckoDriver for Selenium
+- Selenium WebDriver compatible with your browser version
 
-### Installation
+### Setup Instructions
 
-Clone the repository to your machine:
+Clone the PokerNow Bot Framework repository:
 
 ```sh
 git clone https://github.com/Zehmosu/PokerNow.git
 cd PokerNow
 ```
 
-Install the necessary dependencies:
+Install the required Python dependencies:
 
 ```sh
 pip install -r requirements.txt
 ```
 
-### Configuration
+### Configuration Steps
 
-1. Update `cookie_path` in the `PokerClient` class with the path to your cookie file to enable session persistence.
-2. Configure your bot by modifying the `PokerClient` initialization in your script to suit your game settings and strategies.
+1. **Cookie Management**: Specify the path to your cookie file in the `PokerClient` constructor to enable automatic session handling.
+2. **Bot Customization**: Adjust the initialization parameters in `PokerClient` to fit your game's configuration and strategic approach.
 
+## Detailed Documentation
 
-## Documentation
-
-This section provides detailed explanations of the primary classes and methods within the PokerNow Bot Framework, guiding you through their purpose, parameters, and usage.
-
-### Classes and Their Methods
+### Key Components
 
 #### `PokerClient`
 
-Responsible for navigating to the "PokerNow" website, managing cookies, and orchestrating the overall game interaction.
+The central orchestrator for navigating "PokerNow", handling sessions, and managing game interactions.
 
-- **`__init__(self, driver, cookie_path='pokernow_cookies.pkl')`**:
-  - Initializes the poker client with a Selenium WebDriver and a path for cookie storage.
-  - **Parameters**:
-    - `driver`: Instance of Selenium WebDriver.
-    - `cookie_path`: String path to save or load cookies.
-
-- **`navigate(self, url)`**:
-  - Navigates the WebDriver to a specified URL.
-  - **Parameters**:
-    - `url`: The URL to navigate to.
+- **`__init__(driver, cookie_path='pokernow_cookies.pkl')`**: Sets up the client with a WebDriver instance and a cookie storage path.
+- **`navigate(url)`**: Directs the WebDriver to a specified URL.
 
 #### `CookieManager`
 
-Handles the loading and saving of cookies for session persistence.
+Manages browser cookies to maintain session states across gameplays.
 
-- **`load_cookies(self)`**:
-  - Loads cookies from a file into the Selenium browser session.
-- **`save_cookies(self)`**:
-  - Saves the current session cookies to a file.
+- **`load_cookies()`**: Imports cookies from a file into the browser session.
+- **`save_cookies()`**: Exports current session cookies to a file.
 
 #### `GameStateManager`
 
-Extracts and constructs the current game state from the "Poker Now" web interface.
+Analyzes the webpage to construct a current representation of the game state.
 
-- **`get_game_state(self)`**:
-  - Returns a `GameState` object representing the current state of the game.
+- **`get_game_state()`**: Retrieves a snapshot of the current game state.
 
 #### `ActionHelper`
 
-Facilitates the execution of game actions such as fold, check, call, and raise.
+Enables the execution of in-game actions based on available options and strategy.
 
-- **`get_available_actions(self)`**:
-  - Returns a dictionary of the actions currently available to the player.
-- **`perform_action(self, action, amount=None)`**:
-  - Executes a specified action.
-  - **Parameters**:
-    - `action`: The action to perform (e.g., 'Raise', 'Call').
-    - `amount`: Optional amount for the 'Raise' action.
+- **`get_available_actions()`**: Lists actions that the player can currently take.
+- **`perform_action(action, amount=None)`**: Executes a chosen action, optionally specifying an amount for actions like raising.
 
 #### `ElementHelper`
 
-Provides utility methods for interacting with web elements.
+Facilitates interaction with web elements using Selenium, aiding in data extraction and action execution.
 
-- **`get_text(self, selector, context=None)`**:
-  - Retrieves text from a specified element.
-  - **Parameters**:
-    - `selector`: CSS selector for the element.
-    - `context`: Optional parent element to scope the search.
+- **`get_text(selector, context=None)`**: Extracts text from specified elements.
+- **`get_element(selector)`**: Retrieves a single element matching the selector.
+- **`get_elements(selector)`**: Retrieves a list of elements matching the selector.
 
-- **`get_element(self, selector)`**:
-  - Finds and returns a single web element matching the selector.
-  - **Parameters**:
-    - `selector`: CSS selector for the element.
+### Advanced Usage Examples
 
-- **`get_elements(self, selector)`**:
-  - Finds and returns a list of web elements matching the selector.
-  - **Parameters**:
-    - `selector`: CSS selector for the elements.
-
-### Usage Examples
-
-#### Initializing the PokerClient
+#### Starting a Session
 
 ```python
 from selenium import webdriver
@@ -118,46 +88,43 @@ from poker_bot import PokerClient
 
 driver = webdriver.Chrome('/path/to/chromedriver')
 poker_client = PokerClient(driver)
-poker_client.navigate('https://pokernow.club/')
+poker_client.navigate('https://pokernow.club/games/YOUR_GAME_ID')
 ```
 
-#### Loading and Saving Cookies
+#### Session and Game State Management
 
 ```python
-# Load cookies to resume a session
+# Assume you're continuing a previous session
 poker_client.cookie_manager.load_cookies()
 
-# Save cookies for future sessions
-poker_client.cookie_manager.save_cookies()
-```
-
-#### Extracting Game State
-
-```python
+# Refresh the game state to reflect the current situation
 game_state = poker_client.game_state_manager.get_game_state()
-print(game_state.players)
-print(game_state.pot_size)
+print("Current Pot Size:", game_state.pot_size)
 ```
 
-#### Performing Actions
+#### Automated Decision Making
 
 ```python
-# Check if 'Raise' is an available action and perform it with an amount
-poker_client.action_helper.perform_action('Raise', amount=100)
-
-# Fold if it's the current player's turn
-poker_client.action_helper.perform_action('Fold')
+# Example of a simple decision-making logic
+if 'Raise' in poker_client.action_helper.get_available_actions():
+    poker_client.action_helper.perform_action('Raise', amount=50)
+else:
+    poker_client.action_helper.perform_action('Check')
 ```
 
-## Development
+## Contributing
 
-This framework is open for contributions! If you have improvements or new features in mind, feel free to fork the repo and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+We welcome contributions to the PokerNow Bot Framework! Whether you're fixing bugs, adding new features, or improving the documentation, your help is appreciated. Please fork the repository and submit a pull request with your changes.
 
 ## Acknowledgements
 
-- Thanks to "PokerNow" for providing an engaging platform for poker enthusiasts.
-- Selenium WebDriver for the incredible web automation capabilities.
+- "PokerNow" for creating a platform that brings poker enthusiasts together online.
+- The Selenium project, for their powerful tools for web automation.
+
+## License
+
+This project is licensed under the MIT License. For more details, see the [LICENSE](LICENSE) file included with the code.
+
+This enhanced README provides a comprehensive overview of the PokerNow Bot Framework, ensuring users have all the information needed to get started, understand the framework's capabilities, and
+
+ contribute to its development.
