@@ -38,20 +38,115 @@ pip install -r requirements.txt
 1. Update `cookie_path` in the `PokerClient` class with the path to your cookie file to enable session persistence.
 2. Configure your bot by modifying the `PokerClient` initialization in your script to suit your game settings and strategies.
 
-### Running the Bot
 
-To start the bot, use the following example as a guide:
+## Documentation
+
+This section provides detailed explanations of the primary classes and methods within the PokerNow Bot Framework, guiding you through their purpose, parameters, and usage.
+
+### Classes and Their Methods
+
+#### `PokerClient`
+
+Responsible for navigating to the "PokerNow" website, managing cookies, and orchestrating the overall game interaction.
+
+- **`__init__(self, driver, cookie_path='pokernow_cookies.pkl')`**:
+  - Initializes the poker client with a Selenium WebDriver and a path for cookie storage.
+  - **Parameters**:
+    - `driver`: Instance of Selenium WebDriver.
+    - `cookie_path`: String path to save or load cookies.
+
+- **`navigate(self, url)`**:
+  - Navigates the WebDriver to a specified URL.
+  - **Parameters**:
+    - `url`: The URL to navigate to.
+
+#### `CookieManager`
+
+Handles the loading and saving of cookies for session persistence.
+
+- **`load_cookies(self)`**:
+  - Loads cookies from a file into the Selenium browser session.
+- **`save_cookies(self)`**:
+  - Saves the current session cookies to a file.
+
+#### `GameStateManager`
+
+Extracts and constructs the current game state from the "Poker Now" web interface.
+
+- **`get_game_state(self)`**:
+  - Returns a `GameState` object representing the current state of the game.
+
+#### `ActionHelper`
+
+Facilitates the execution of game actions such as fold, check, call, and raise.
+
+- **`get_available_actions(self)`**:
+  - Returns a dictionary of the actions currently available to the player.
+- **`perform_action(self, action, amount=None)`**:
+  - Executes a specified action.
+  - **Parameters**:
+    - `action`: The action to perform (e.g., 'Raise', 'Call').
+    - `amount`: Optional amount for the 'Raise' action.
+
+#### `ElementHelper`
+
+Provides utility methods for interacting with web elements.
+
+- **`get_text(self, selector, context=None)`**:
+  - Retrieves text from a specified element.
+  - **Parameters**:
+    - `selector`: CSS selector for the element.
+    - `context`: Optional parent element to scope the search.
+
+- **`get_element(self, selector)`**:
+  - Finds and returns a single web element matching the selector.
+  - **Parameters**:
+    - `selector`: CSS selector for the element.
+
+- **`get_elements(self, selector)`**:
+  - Finds and returns a list of web elements matching the selector.
+  - **Parameters**:
+    - `selector`: CSS selector for the elements.
+
+### Usage Examples
+
+#### Initializing the PokerClient
 
 ```python
 from selenium import webdriver
 from poker_bot import PokerClient
 
-# Initialize Selenium WebDriver
-driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
-
-# Create and configure the PokerClient
+driver = webdriver.Chrome('/path/to/chromedriver')
 poker_client = PokerClient(driver)
-poker_client.navigate('https://pokernow.club/games/YOUR_GAME_ID')
+poker_client.navigate('https://pokernow.club/')
+```
+
+#### Loading and Saving Cookies
+
+```python
+# Load cookies to resume a session
+poker_client.cookie_manager.load_cookies()
+
+# Save cookies for future sessions
+poker_client.cookie_manager.save_cookies()
+```
+
+#### Extracting Game State
+
+```python
+game_state = poker_client.game_state_manager.get_game_state()
+print(game_state.players)
+print(game_state.pot_size)
+```
+
+#### Performing Actions
+
+```python
+# Check if 'Raise' is an available action and perform it with an amount
+poker_client.action_helper.perform_action('Raise', amount=100)
+
+# Fold if it's the current player's turn
+poker_client.action_helper.perform_action('Fold')
 ```
 
 ## Development
