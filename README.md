@@ -84,7 +84,7 @@ Facilitates interaction with web elements using Selenium, aiding in data extract
 
 ```python
 from selenium import webdriver
-from poker_bot import PokerClient
+from PokerNow import PokerClient
 
 driver = webdriver.Chrome('/path/to/chromedriver')
 poker_client = PokerClient(driver)
