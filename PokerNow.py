@@ -238,20 +238,7 @@ class ElementHelper:
             return self.driver.find_elements(By.CSS_SELECTOR, selector)
         except NoSuchElementException:
             return []
-
-# Enums
-class PlayerState(Enum):
-    ACTIVE = auto()
-    FOLDED = auto()
-    CURRENT = auto()
-    OFFLINE = auto()
-
-class PlayerAction(Enum):
-    CALL = auto()
-    RAISE = auto()
-    CHECK = auto()
-    FOLD = auto()
-
+            
 # Client
 class PokerClient:
     def __init__(self, driver, cookie_path='pokernow_cookies.pkl'):
