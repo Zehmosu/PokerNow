@@ -1,6 +1,3 @@
-Here's the updated README.md with the new `is_your_turn` method added to the `GameStateManager` class:
-
-```markdown
 # PokerNow Client
 
 A client for interacting with PokerNow.club using Selenium.
