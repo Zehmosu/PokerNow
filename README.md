@@ -1,3 +1,6 @@
+Here's the updated README.md with the new `is_your_turn` method added to the `GameStateManager` class:
+
+```markdown
 # PokerNow Client
 
 A client for interacting with PokerNow.club using Selenium.
@@ -11,6 +14,7 @@ A client for interacting with PokerNow.club using Selenium.
   - [Methods](#methods)
 - [GameStateManager](#gamestatemanager)
   - [get_game_state](#get_game_state)
+  - [is_your_turn](#is_your_turn)
   - [get_winners](#get_winners)
   - [get_community_cards](#get_community_cards)
   - [get_players_info](#get_players_info)
@@ -57,7 +61,7 @@ Here's an example of how to use the PokerNow Client:
 
 ```python
 from selenium import webdriver
-from PokerNow import PokerClient
+from pokernow import PokerClient
 import time
 
 # Create a new instance of a WebDriver
@@ -101,6 +105,7 @@ print("Winners:")
 for winner in game_state.winners:
     print("  Name:", winner['name'])
     print("  Stack Info:", winner['stack_info'])
+print("Is Your Turn:", game_state.is_your_turn)
 
 # Perform actions based on the game state and your strategy
 available_actions = client.action_helper.get_available_actions()
@@ -148,7 +153,15 @@ The `GameStateManager` class is responsible for managing and retrieving the game
 def get_game_state(self)
 ```
 
-Retrieves the current game state, including game type, pot size, community cards, players' information, dealer position, current player, blinds, and winners.
+Retrieves the current game state, including game type, pot size, community cards, players' information, dealer position, current player, blinds, winners, and whether it's your turn.
+
+### is_your_turn
+
+```python
+def is_your_turn(self)
+```
+
+Checks if it's your turn to act in the current game.
 
 ### get_winners
 
@@ -312,7 +325,7 @@ Represents a playing card with rank and suit.
 
 ### GameState
 
-Represents the state of the game, including game type, pot size, community cards, players' information, dealer position, current player, blinds, and winners.
+Represents the state of the game, including game type, pot size, community cards, players' information, dealer position, current player, blinds, winners, and whether it's your turn.
 
 ### PlayerInfo
 
@@ -353,3 +366,4 @@ Contributions are welcome! Please submit a pull request or open an issue on the 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+```
