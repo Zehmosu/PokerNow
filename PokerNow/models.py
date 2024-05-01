@@ -17,7 +17,7 @@ class Card:
         return f'{rank} of {suit}' if rank and suit else 'Unknown Card'
         
 class GameState:
-    def __init__(self, game_type, pot_size, community_cards, players, dealer_position, current_player, blinds, winners=None):
+    def __init__(self, game_type, pot_size, community_cards, players, dealer_position, current_player, blinds, winners=None, is_your_turn=False):
         self.game_type = game_type
         self.pot_size = pot_size
         self.community_cards = community_cards
@@ -26,6 +26,7 @@ class GameState:
         self.current_player = current_player
         self.blinds = blinds
         self.winners = winners
+        self.is_your_turn = is_your_turn
 
 class PlayerInfo:
     def __init__(self, name, stack, bet_value, cards, status, hand_message=''):
