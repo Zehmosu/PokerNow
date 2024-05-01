@@ -3,7 +3,7 @@ import pickle
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from models import Card, GameState, PlayerInfo, PlayerState
+from .models import Card, GameState, PlayerInfo, PlayerState
 
 class CookieManager:
     def __init__(self, driver, cookie_path):
@@ -36,9 +36,17 @@ class GameStateManager:
             dealer_position=self.get_dealer_position(),
             current_player=self.get_current_player(),
             blinds=self.get_blinds(),
-            winners=self.get_winners()
+            winners=self.get_winners(),
+            is_your_turn=self.is_your_turn()
         )
-        
+
+    def is_your_turn(self):
+        try:
+            action_signal = self.element_helper.get_element('.action-signal')
+            return action_signal.text.strip() == 'Your Turn'
+        except NoSuchElementException:
+            return False
+
     def get_winners(self):
         winners = []
         try:
