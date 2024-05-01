@@ -363,4 +363,3 @@ Contributions are welcome! Please submit a pull request or open an issue on the 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
-```
